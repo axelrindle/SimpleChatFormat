@@ -1,0 +1,14 @@
+name: SimpleChatFormat
+description: Use colors in the chat and display meta information from Vault.
+version: @version@
+author: Axel Rindle
+main: de.axelrindle.simplechatformat.SimpleChatFormat
+api-version: 1.16
+depend: [ Vault ]
+commands:
+  simplechatformat:
+    description: Admin access.
+    usage: /simplechatformat
+    permission: simplechatformat.manage
+    aliases:
+      - scf

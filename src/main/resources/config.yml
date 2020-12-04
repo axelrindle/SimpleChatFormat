@@ -1,0 +1,15 @@
+# # # # # # # # # # # # # # # # # # # #
+# SimpleChatFormat configuration
+#
+
+# Indicates whether players need a permission to use color codes in the chat.
+NeedsPermissionForColors: false
+
+# Specifies the chat format to use. Color codes are available.
+# In addition you may use the following placeholders:
+# {prefix} -> prints all prefixes found for a player
+# {suffix} -> prints all suffixes found for a player
+# {name} -> prints the raw player name
+# {displayname} -> prints a player's custom displayname // TODO: how to do this in 1.16?
+# {message} prints the actual message
+Format: "{prefix} {name} {suffix} : {message}"
