@@ -2,3 +2,5 @@ rootProject.name = 'SimpleChatFormat'
 
 include 'main'
 findProject(':main').name = 'main'
+
+include 'impl:1.16'
