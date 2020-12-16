@@ -1,10 +1,7 @@
 package de.axelrindle.simplechatformat.command;
 
 import de.axelrindle.simplechatformat.SimpleChatFormat;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,10 +37,12 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         } else {
             sender.sendMessage(SimpleChatFormat.PREFIX + " Help");
             sender.sendMessage("");
-            sender.sendMessage("/scf");
-            for (String subCommand : subCommands.keySet()) {
-                sender.sendMessage("/scf " + subCommand);
-            }
+            sender.sendMessage("/scf §7-§r " + command.getDescription());
+            subCommands.forEach((name, handler) -> {
+                if (sender.hasPermission(handler.getPermission())) {
+                    sender.sendMessage("/scf " + name + " §7-§r " + handler.getDescription());
+                }
+            });
             return true;
         }
     }
@@ -56,6 +55,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
                         String permission = entry.getValue().getPermission();
                         return permission == null || plugin.getPerms().has(sender, permission);
                     })
+                    .filter(entry -> entry.getKey().toLowerCase().contains(args[0].toLowerCase()))
                     .map(Map.Entry::getKey)
                     .collect(Collectors.toList());
         }

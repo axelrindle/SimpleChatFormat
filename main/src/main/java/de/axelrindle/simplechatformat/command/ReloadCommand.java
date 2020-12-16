@@ -18,6 +18,11 @@ public class ReloadCommand implements ISubCommand {
     }
 
     @Override
+    public String getDescription() {
+        return "Reloads the config file from the disk.";
+    }
+
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         plugin.reloadConfig();
         sender.sendMessage(SimpleChatFormat.PREFIX + " §aConfig has been reloaded.");

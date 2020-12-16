@@ -1,46 +1,20 @@
-import org.apache.tools.ant.filters.ReplaceTokens
+subprojects {
+    apply plugin: 'java'
 
-apply plugin: 'java'
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
 
-group = 'de.axelrindle'
+    ext {
+        versionVault = '1.7'
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+        maven { url 'https://oss.sonatype.org/content/groups/public/' }
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+group = 'de.axelrindle.simplechatformat'
 version = '1.0'
-archivesBaseName = 'SimpleChatFormat'
-
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
-repositories {
-    mavenCentral()
-    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
-    maven { url 'https://oss.sonatype.org/content/groups/public/' }
-    maven { url 'https://jitpack.io' }
-}
-
-dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.16.4-R0.1-SNAPSHOT'
-    compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
-}
-
-processResources {
-    from(sourceSets.main.resources.srcDirs) {
-        filter ReplaceTokens, tokens: [version: version]
-    }
-}
-
-jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-}
-
-task copyToServer(type: Copy) {
-    def dir = System.getenv('PLUGINS_DIR')
-    if (dir == null) return true
-
-    from('build/libs') {
-        include "${archivesBaseName}-${project.version}.jar"
-    }
-    into dir
-}
-
-assemble {
-    finalizedBy copyToServer
-}

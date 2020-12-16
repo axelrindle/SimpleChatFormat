@@ -5,5 +5,6 @@ import org.bukkit.command.CommandExecutor;
 public interface ISubCommand extends CommandExecutor {
 
     String getPermission();
+    String getDescription();
 
 }

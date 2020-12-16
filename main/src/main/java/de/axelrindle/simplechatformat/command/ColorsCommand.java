@@ -3,7 +3,6 @@ package de.axelrindle.simplechatformat.command;
 import de.axelrindle.simplechatformat.SimpleChatFormat;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
@@ -17,6 +16,11 @@ public class ColorsCommand implements ISubCommand {
     @Override
     public String getPermission() {
         return "simplechatformat.colors";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Displays a list of all available chat colors to use.";
     }
 
     @Override
