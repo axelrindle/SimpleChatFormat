@@ -5,6 +5,7 @@ author: Axel Rindle
 main: de.axelrindle.simplechatformat.SimpleChatFormat
 api-version: 1.16
 depend: [ Vault ]
+website: https://dev.bukkit.org/projects/simplechatformat-plugin
 commands:
   simplechatformat:
     description: Admin access.

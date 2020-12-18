@@ -1,18 +1,16 @@
 package de.axelrindle.simplechatformat;
 
 import de.axelrindle.simplechatformat.command.MainCommand;
+import de.axelrindle.simplechatformat.event.ChatListener;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
-import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.util.Objects;
 
@@ -32,6 +30,7 @@ public final class SimpleChatFormat extends JavaPlugin {
             return;
         }
 
+        // TODO: use PocketKnife for future updates
         // create data directory
         if (!getDataFolder().exists()) {
             try {
@@ -66,19 +65,14 @@ public final class SimpleChatFormat extends JavaPlugin {
         command.setTabCompleter(mainCommand);
 
         // register event listeners
-        String[] pkg = getServer().getClass().getPackage().getName().split("\\.");
-        String serverVersion = pkg[pkg.length - 1];
         try {
-            Class<?> versionClass = Class.forName("de.axelrindle.simplechatformat." + serverVersion + ".ChatListener");
-            Object newInstance = versionClass.getConstructor(JavaPlugin.class, Chat.class, Permission.class)
-                    .newInstance(this, chat, perms);
-            getServer().getPluginManager().registerEvents((Listener) newInstance, this);
-            getLogger().info("Registered listener " + versionClass.getName());
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-            e.printStackTrace();
-            getLogger().severe("The server version " + serverVersion + " is unsupported!");
-            Bukkit.getServer().getPluginManager().disablePlugin(this);
+            Class.forName("org.bukkit.event.player.AsyncPlayerChatEvent");
+            getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+        } catch (ClassNotFoundException e) {
+            getLogger().warning("Unable to find class AsyncPlayerChatEvent! Falling back to legacy event.");
         }
+
+        getLogger().info(String.format("%s v%s initialized.", getDescription().getName(), getDescription().getVersion()));
     }
 
     public Chat getChat() {
