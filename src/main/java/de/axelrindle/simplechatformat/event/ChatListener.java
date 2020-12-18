@@ -25,6 +25,7 @@ public class ChatListener implements Listener {
     private void initReplacers() {
         PLACEHOLDERS.put("prefix", player -> plugin.getChat().getPlayerPrefix(player));
         PLACEHOLDERS.put("suffix", player -> plugin.getChat().getPlayerSuffix(player));
+        PLACEHOLDERS.put("world", player -> player.getWorld().getName());
         // TODO: make this accessible through configuration
     }
 

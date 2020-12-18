@@ -9,7 +9,7 @@ NeedsPermissionForColors: false
 # In addition you may use the following placeholders:
 # {prefix} -> prints all prefixes found for a player
 # {suffix} -> prints all suffixes found for a player
-# {name} -> prints the raw player name
-# {displayname} -> prints a player's custom displayname // TODO: how to do this in 1.16?
+# {world} -> prints the world name where the player is in
+# {name} -> prints the player's display name
 # {message} prints the actual message
 Format: "{prefix} {name} {suffix} : {message}"
